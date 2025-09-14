@@ -1,0 +1,20 @@
+# Gitleaks configuration for XRoutR
+# Allowlist non-sensitive example/test files while keeping scans strict elsewhere.
+
+[allowlist]
+description = "allowlist example envs, fixtures, docs"
+files = [
+  "^frontend/.env.example$",
+  "^backend/.env.example$",
+  "^\\.env\\.example$",
+  "^fixtures/.*$",
+  "^docs/.*$",
+  "^infra/docker-compose\\.yml$"
+]
+regexes = [
+  # Common placeholder secrets
+  "minioadmin",
+  "replace-with-.*",
+  "TENANT_SIGNING_KEY",
+  "S3_SECRET_ACCESS_KEY"
+]

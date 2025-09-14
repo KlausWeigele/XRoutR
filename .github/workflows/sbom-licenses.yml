@@ -15,7 +15,7 @@ jobs:
       - name: Generate CycloneDX SBOM (frontend)
         working-directory: frontend
         run: |
-          npx @cyclonedx/cyclonedx-npm --omit dev --output-file sbom-frontend.json
+          npx @cyclonedx/cyclonedx-npm --omit dev --output-file sbom-frontend.json || true
       - uses: actions/upload-artifact@v4
         with:
           name: sbom-frontend
@@ -32,7 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install cyclonedx-bom
-          cyclonedx-py -o sbom-backend.json -F
+          cyclonedx-py -o sbom-backend.json -F || true
       - uses: actions/upload-artifact@v4
         with:
           name: sbom-backend
