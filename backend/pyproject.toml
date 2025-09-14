@@ -17,4 +17,6 @@ dependencies = [
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
-
+markers = [
+  "performance: performance budget tests",
+]
