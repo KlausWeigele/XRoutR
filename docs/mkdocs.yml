@@ -1,0 +1,11 @@
+site_name: XRoutR Docs
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Usage:
+      - Quickstart: usage/quickstart.md
+  - ADR: adr/0001-architecture.md
+  - Compliance:
+      - AV/TOMs: compliance/AV-TOMs.md
+

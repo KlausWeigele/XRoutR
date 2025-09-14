@@ -1,0 +1,54 @@
+name: SBOM & Licenses
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch: {}
+jobs:
+  sbom-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generate CycloneDX SBOM (frontend)
+        working-directory: frontend
+        run: |
+          npx @cyclonedx/cyclonedx-npm --omit dev --output-file sbom-frontend.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom-frontend
+          path: frontend/sbom-frontend.json
+  sbom-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate CycloneDX SBOM (backend)
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install cyclonedx-bom
+          cyclonedx-py -o sbom-backend.json -F
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom-backend
+          path: backend/sbom-backend.json
+  licenses-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generate license report (frontend)
+        working-directory: frontend
+        run: |
+          npx license-checker --json > licenses-frontend.json || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: licenses-frontend
+          path: frontend/licenses-frontend.json

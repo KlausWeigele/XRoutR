@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xroutr.local/shared/canonical_invoice.schema.json",
+  "title": "Canonical Invoice (XRoutR)",
+  "type": "object",
+  "required": ["header", "seller", "buyer", "lines", "totals"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["invoice_id", "issue_date", "currency"],
+      "properties": {
+        "invoice_id": {"type": "string"},
+        "issue_date": {"type": "string", "format": "date"},
+        "currency": {"type": "string"},
+        "profile_id": {"type": "string"},
+        "customization_id": {"type": "string"},
+        "totals": {
+          "type": "object",
+          "required": ["net", "tax", "gross"],
+          "properties": {
+            "net": {"type": "number"},
+            "tax": {"type": "number"},
+            "gross": {"type": "number"}
+          }
+        }
+      }
+    },
+    "seller": {
+      "type": "object",
+      "required": ["name", "address"],
+      "properties": {
+        "name": {"type": "string"},
+        "vat_id": {"type": "string"},
+        "tax_id": {"type": "string"},
+        "address": {"type": "object", "additionalProperties": true}
+      }
+    },
+    "buyer": {
+      "type": "object",
+      "required": ["name", "address"],
+      "properties": {
+        "name": {"type": "string"},
+        "vat_id": {"type": "string"},
+        "tax_id": {"type": "string"},
+        "address": {"type": "object", "additionalProperties": true}
+      }
+    },
+    "b2g": {
+      "type": "object",
+      "properties": {"leitweg_id": {"type": "string"}}
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "quantity", "unit", "price", "vat", "line_total"],
+        "properties": {
+          "description": {"type": "string"},
+          "quantity": {"type": "number"},
+          "unit": {"type": "string"},
+          "price": {"type": "number"},
+          "vat": {
+            "type": "object",
+            "required": ["category", "rate"],
+            "properties": {
+              "category": {"type": "string"},
+              "rate": {"type": "number"}
+            }
+          },
+          "line_total": {"type": "number"}
+        }
+      }
+    },
+    "tax": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "rate", "base", "amount"],
+        "properties": {
+          "category": {"type": "string"},
+          "rate": {"type": "number"},
+          "base": {"type": "number"},
+          "amount": {"type": "number"}
+        }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "payment_means": {"type": "string"},
+        "iban": {"type": "string"},
+        "bic": {"type": "string"},
+        "terms": {"type": "string"},
+        "due_date": {"type": "string", "format": "date"}
+      }
+    },
+    "references": {
+      "type": "object",
+      "properties": {
+        "order_ref": {"type": "string"},
+        "delivery_note": {"type": "string"},
+        "contract": {"type": "string"}
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "uri", "hash"],
+        "properties": {
+          "type": {"type": "string"},
+          "uri": {"type": "string"},
+          "hash": {"type": "string"}
+        }
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "layer", "severity", "xpath", "message_de"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "layer": {"type": "string", "enum": ["schema", "en16931", "xrechnung"]},
+          "severity": {"type": "string", "enum": ["error", "warn"]},
+          "xpath": {"type": "string"},
+          "message_de": {"type": "string"},
+          "hint_de": {"type": "string"}
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+

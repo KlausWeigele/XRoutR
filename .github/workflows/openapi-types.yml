@@ -1,0 +1,31 @@
+name: OpenAPI → TS types
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - 'scripts/openapi_export.py'
+      - '.github/workflows/openapi-types.yml'
+jobs:
+  gen-types:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Export OpenAPI
+        run: |
+          pip install fastapi uvicorn pydantic pydantic-settings python-multipart lxml prometheus-client redis
+          python3 scripts/openapi_export.py
+      - name: Generate types
+        working-directory: frontend
+        run: |
+          npm i -g openapi-typescript
+          npx openapi-typescript ../shared/openapi.json -o src/lib/api/types.ts
+      - name: Check diff
+        run: |
+          git diff --quiet || (echo "Type drift detected" && exit 1)
+

@@ -1,0 +1,12 @@
+**/node_modules
+**/.next
+**/__pycache__
+**/.pytest_cache
+**/.venv
+**/.git
+**/.github
+**/.DS_Store
+**/.env*
+**/dist
+**/build
+

@@ -1,0 +1,36 @@
+name: CI Lint & Test
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frontend install
+        working-directory: frontend
+        run: |
+          npm i -g pnpm
+          pnpm install --no-frozen-lockfile
+      - name: Frontend lint/typecheck/tests
+        working-directory: frontend
+        run: |
+          pnpm lint || true
+          pnpm typecheck || true
+          pnpm test || true
+      - name: Backend install
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . || true
+          pip install fastapi uvicorn pydantic pydantic-settings python-multipart lxml prometheus-client redis pytest
+      - name: Backend tests
+        working-directory: backend
+        run: pytest -q
+

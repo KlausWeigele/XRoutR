@@ -1,0 +1,20 @@
+[project]
+name = "xroutr-backend"
+version = "0.1.0"
+description = "XRoutR FastAPI backend (validation router & exporters)"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.111.0",
+  "uvicorn>=0.30.0",
+  "pydantic>=2.6.0",
+  "pydantic-settings>=2.3.0",
+  "python-multipart>=0.0.9",
+  "lxml>=5.2.0",
+  "prometheus-client>=0.20.0",
+  "redis>=5.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+

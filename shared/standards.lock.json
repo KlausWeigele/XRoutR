@@ -1,0 +1,10 @@
+{
+  "xrechnung_cius": "3.0.0",
+  "en16931_schematron": "2023-12",
+  "ubl_schema": "2.1",
+  "cii_schema": "D16B",
+  "peppol_bis": "3.0.14",
+  "generated_at": "2025-09-14T00:00:00Z",
+  "notes": "Pinned standards set; update via monthly check PR."
+}
+
