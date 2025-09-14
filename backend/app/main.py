@@ -3,7 +3,6 @@ from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel
 from typing import Optional
 from prometheus_client import CollectorRegistry, Counter, generate_latest, CONTENT_TYPE_LATEST
-from .tasks.validate_stub import perform_validation
 from .validation.validators import run_all
 from lxml import etree
 

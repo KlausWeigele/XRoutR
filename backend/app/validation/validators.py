@@ -42,10 +42,9 @@ def run_all(xml_bytes: bytes) -> Dict:
     seen = set()
     deduped = []
     for it in validation:
-        key = (it.get('rule_id'), it.get('layer'), it.get('xpath'), it.get('code'))
+        key = (it.get('rule_id'), it.get('layer'), it.get('xpath'), it.get('code'), it.get('severity'))
         if key in seen:
             continue
         seen.add(key)
         deduped.append(it)
     return {"profile": meta, "validation": deduped}
-
