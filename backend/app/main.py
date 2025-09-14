@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel
+from typing import Optional
 from prometheus_client import CollectorRegistry, Counter, generate_latest, CONTENT_TYPE_LATEST
 
 from .models.canonical import CanonicalInvoice
@@ -13,10 +14,10 @@ VALIDATED_TOTAL = Counter("invoices_validated_total", "Invoices validated", regi
 
 
 class IngestRequest(BaseModel):
-    filename: str | None = None
-    content_type: str | None = None
-    s3_uri: str | None = None
-    tenant_id: str | None = None
+    filename: Optional[str] = None
+    content_type: Optional[str] = None
+    s3_uri: Optional[str] = None
+    tenant_id: Optional[str] = None
 
 
 class IngestResponse(BaseModel):
@@ -68,4 +69,3 @@ def invoice_route(invoice_id: str, target: str = Query("datev")):
     if target not in {"datev"}:
         raise HTTPException(status_code=400, detail="unsupported target")
     return {"invoice_id": invoice_id, "routed": True, "target": target}
-
