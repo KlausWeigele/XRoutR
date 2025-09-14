@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { postRoute } from '@/src/lib/api/client'
+import { postRoute } from '../../../../../src/lib/api/client'
 
 export const runtime = 'nodejs'
 

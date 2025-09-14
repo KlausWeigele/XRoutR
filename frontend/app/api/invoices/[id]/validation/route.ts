@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getValidation } from '@/src/lib/api/client'
+import { getValidation } from '../../../../../src/lib/api/client'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
