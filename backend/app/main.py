@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import Optional
 from prometheus_client import CollectorRegistry, Counter, generate_latest, CONTENT_TYPE_LATEST
 from .tasks.validate_stub import perform_validation
+from .validation.validators import run_all
 from lxml import etree
 
 from .models.canonical import CanonicalInvoice
@@ -61,12 +62,14 @@ def invoice_validation(invoice_id: str):
     if not xml:
         # Fallback: simple minimal UBL for demo
         xml = b"""<Invoice xmlns=\"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2\" xmlns:cbc=\"urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2\"></Invoice>"""
-    findings = perform_validation(xml)
+    result = run_all(xml)
+    findings = result["validation"]
     for f in findings:
         VALIDATION_ERRORS_TOTAL.labels(layer=f.get("layer"), rule_id=f.get("rule_id")).inc()
-    # naive profile label until detect_profile is exposed
-    VALIDATED_TOTAL.labels(profile="xrechnung", layer="schema").inc()
-    return {"invoice_id": invoice_id, "validation": findings}
+    # profile label from detection
+    profile_id = result.get("profile", {}).get("profile_id", "unknown")
+    VALIDATED_TOTAL.labels(profile=profile_id, layer="schema").inc()
+    return {"invoice_id": invoice_id, "profile": result.get("profile"), "validation": findings}
 
 
 @app.post("/invoices/{invoice_id}/route")
