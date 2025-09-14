@@ -10,12 +10,12 @@ def svrl_to_findings(svrl_xml: bytes) -> List[Dict]:
     ns = {"svrl": "http://purl.oclc.org/dsdl/svrl"}
     root = etree.fromstring(svrl_xml)
     findings: List[Dict] = []
-    for fa in root.xpath("//svrl:failed-assert", namespaces=ns):
+    for fa in root.xpath("//svrl:failed-assert|//svrl:successful-report", namespaces=ns):
         rid = fa.get("id") or fa.get("flag") or "RULE"
         location = fa.get("location") or ""
         text_el = fa.find("svrl:text", namespaces=ns)
         text = (text_el.text or "").strip() if text_el is not None else ""
-        layer = "xrechnung" if rid.startswith("XR-") else "en16931"
+        layer = "xrechnung" if rid.startswith("XR-") or rid.startswith("XRECHNUNG-") else "en16931"
         code = 3000 if layer == "xrechnung" else 2000
         findings.append(
             {

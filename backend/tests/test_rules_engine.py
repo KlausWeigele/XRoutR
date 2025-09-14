@@ -21,4 +21,3 @@ def test_br01_and_xr_leitweg_rules_hit():
     doc2 = etree.fromstring(xml2)
     findings2 = apply_catalog(doc2, cat)
     assert any(f["rule_id"] == "XR-LEITWEG" and f["layer"] == "xrechnung" for f in findings2)
-

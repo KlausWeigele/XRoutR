@@ -2,10 +2,12 @@
 
 ## BR-01 — Rechnungsnummer fehlt
 - XPath: `//cbc:ID`
-- Beschreibung: Pflichtfeld BT‑1 ist leer.
-- Korrektur: Tragen Sie eine eindeutige Rechnungsnummer in `cbc:ID` ein.
+- Prädikat: `notEmpty`
+- Beschreibung: Pflichtfeld BT‑1 (cbc:ID) ist leer.
+- Korrektur: Eindeutige Nummer in `cbc:ID` (BT‑1) eintragen.
 
 ## XR-LEITWEG — Leitweg-ID fehlt (B2G)
 - XPath: `//cbc:EndpointID`
+- Prädikat: `exists`
 - Beschreibung: Für B2G‑Rechnungen ist eine Leitweg‑ID erforderlich.
-- Korrektur: Fügen Sie `cbc:EndpointID` mit korrektem Scheme ein.
+- Korrektur: `cbc:EndpointID` mit korrektem Scheme ergänzen.

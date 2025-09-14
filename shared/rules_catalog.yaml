@@ -20,9 +20,10 @@ en16931:
     xpath: "//cbc:ID"
     severity: "error"
     title: "Rechnungsnummer fehlt"
-    message_de: "Pflichtfeld BT-1 (Rechnungsnummer) ist leer."
-    hint_de: "Tragen Sie eine eindeutige Rechnungsnummer in BT-1 (cbc:ID) ein."
+    message_de: "Pflichtfeld BT-1 (cbc:ID) leer."
+    hint_de: "Eindeutige Nummer in BT-1 eintragen."
     doc_url: "/docs/rules/en16931#br-01"
+    predicate: "notEmpty"
 
 xrechnung:
   XR-LEITWEG:
@@ -32,3 +33,4 @@ xrechnung:
     message_de: "Für B2G-Receipts ist eine Leitweg-ID erforderlich."
     hint_de: "Fügen Sie die Leitweg-ID im Element cbc:EndpointID mit dem richtigen Scheme ein."
     doc_url: "/docs/rules/xrechnung#leitweg"
+    predicate: "exists"

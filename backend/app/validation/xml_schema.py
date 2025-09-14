@@ -1,5 +1,6 @@
 from __future__ import annotations
 from lxml import etree
+from .xml_utils import parse_xml
 from typing import List
 
 UBL_NS = {
@@ -14,7 +15,7 @@ CII_NS = {
 
 
 def _validate_with_xsd(xml_bytes: bytes, xsd_bytes: bytes) -> List[dict]:
-    doc = etree.fromstring(xml_bytes)
+    doc = parse_xml(xml_bytes)
     xsd_doc = etree.fromstring(xsd_bytes)
     schema = etree.XMLSchema(xsd_doc)
     errors: List[dict] = []
@@ -57,7 +58,7 @@ def validate_ubl(xml_bytes: bytes) -> List[dict]:
         return _validate_with_xsd(xml_bytes, xsd)
     except Exception as exc:  # fallback to well-formedness
         try:
-            etree.fromstring(xml_bytes)
+            parse_xml(xml_bytes)
             return []
         except Exception:
             return [
@@ -86,7 +87,7 @@ def validate_cii(xml_bytes: bytes) -> List[dict]:
         return _validate_with_xsd(xml_bytes, xsd)
     except Exception as exc:
         try:
-            etree.fromstring(xml_bytes)
+            parse_xml(xml_bytes)
             return []
         except Exception:
             return [
@@ -100,4 +101,3 @@ def validate_cii(xml_bytes: bytes) -> List[dict]:
                     "hint_de": None,
                 }
             ]
-
