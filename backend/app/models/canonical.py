@@ -66,6 +66,7 @@ class Attachment(BaseModel):
 
 
 class ValidationEntry(BaseModel):
+    code: int
     rule_id: str
     layer: str
     severity: str
@@ -85,4 +86,3 @@ class CanonicalInvoice(BaseModel):
     references: Optional[References] = None
     attachments: Optional[List[Attachment]] = None
     validation: Optional[List[ValidationEntry]] = None
-

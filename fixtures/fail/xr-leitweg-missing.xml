@@ -1,0 +1,5 @@
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-2</cbc:ID>
+  <!-- missing cbc:EndpointID to trigger XR-LEITWEG rule -->
+</Invoice>
+

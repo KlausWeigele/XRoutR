@@ -1,0 +1,11 @@
+[
+  {
+    "code": 2000,
+    "rule_id": "BR-01",
+    "layer": "en16931",
+    "severity": "error",
+    "xpath": "//cbc:ID",
+    "message_de": "Pflichtfeld BT-1 (cbc:ID) leer.",
+    "hint_de": "Eindeutige Nummer in BT-1 eintragen."
+  }
+]

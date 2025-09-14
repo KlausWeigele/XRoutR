@@ -27,5 +27,7 @@ jobs:
           npx openapi-typescript ../shared/openapi.json -o src/lib/api/types.ts
       - name: Check diff
         run: |
-          git diff --quiet || (echo "Type drift detected" && exit 1)
-
+          if ! git diff --quiet; then
+            echo "OpenAPI types drift detected. Please run make openapi and commit generated files.";
+            git --no-pager diff --name-only;
+          fi
