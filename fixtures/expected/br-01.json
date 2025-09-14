@@ -1,0 +1,12 @@
+[
+  {
+    "code": 2000,
+    "rule_id": "BR-01",
+    "layer": "en16931",
+    "severity": "error",
+    "xpath": "//cbc:ID",
+    "message_de": "Pflichtfeld BT-1 (Rechnungsnummer) ist leer.",
+    "hint_de": "Tragen Sie eine eindeutige Rechnungsnummer in BT-1 (cbc:ID) ein."
+  }
+]
+

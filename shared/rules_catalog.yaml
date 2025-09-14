@@ -32,4 +32,3 @@ xrechnung:
     message_de: "Für B2G-Receipts ist eine Leitweg-ID erforderlich."
     hint_de: "Fügen Sie die Leitweg-ID im Element cbc:EndpointID mit dem richtigen Scheme ein."
     doc_url: "/docs/rules/xrechnung#leitweg"
-
