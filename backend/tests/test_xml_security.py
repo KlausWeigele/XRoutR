@@ -18,3 +18,11 @@ def test_rejects_billion_laughs():
     with pytest.raises(ValueError):
         parse_xml(xml)
 
+
+def test_rejects_oversize(monkeypatch):
+    # Limit to 1 KiB and pass ~2 KiB payload
+    monkeypatch.setenv("MAX_XML_BYTES", "1024")
+    big_text = "a" * 2000
+    xml = f"<root>{big_text}</root>".encode("utf-8")
+    with pytest.raises(ValueError):
+        parse_xml(xml)
