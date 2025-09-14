@@ -9,9 +9,9 @@
     "baseUrl": ".",
     "paths": {},
     "noEmit": true,
+    "skipLibCheck": true,
     "types": ["jest", "node"]
   },
   "include": ["app", "src", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }
-

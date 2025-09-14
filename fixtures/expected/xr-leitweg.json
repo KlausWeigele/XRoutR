@@ -1,0 +1,12 @@
+[
+  {
+    "code": 3000,
+    "rule_id": "XR-LEITWEG",
+    "layer": "xrechnung",
+    "severity": "error",
+    "xpath": "//cbc:EndpointID",
+    "message_de": "Für B2G-Receipts ist eine Leitweg-ID erforderlich.",
+    "hint_de": "Fügen Sie die Leitweg-ID im Element cbc:EndpointID mit dem richtigen Scheme ein."
+  }
+]
+
