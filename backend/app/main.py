@@ -74,8 +74,18 @@ def invoices_ingest(req: IngestRequest, idempotency_key: Optional[str] = Header(
     job_id = "job_00000001"
     if idempotency_key and idempotency_key in IDEMP_STORE:
         return IDEMP_STORE[idempotency_key]
+    if not idempotency_key:
+        # Fallback: derive idempotency from payload + tenant + current minute
+        import hashlib, time
+        minute = int(time.time() // 60)
+        basis = (xml or b"") + (req.tenant_id or "").encode("utf-8") + str(minute).encode("utf-8")
+        idempotency_key = "auto:" + hashlib.sha256(basis).hexdigest()
     if xml:
         STORAGE[invoice_id] = xml
+        try:
+            XML_SIZE_BYTES.observe(len(xml))
+        except Exception:
+            pass
     INGEST_TOTAL.labels(source="api").inc()
     resp = IngestResponse(invoice_id=invoice_id, job_id=job_id)
     if idempotency_key:

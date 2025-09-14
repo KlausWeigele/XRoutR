@@ -18,7 +18,8 @@ def compile_schematron(path: str) -> Optional["isoschematron.Schematron"]:
     p = Path(path)
     if not p.exists():
         return None
-    doc = etree.parse(str(p))
+    parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False, dtd_validation=False)
+    doc = etree.parse(str(p), parser)
     return isoschematron.Schematron(doc, store_report=True)  # type: ignore
 
 

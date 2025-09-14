@@ -1,5 +1,6 @@
 from typing import List, Dict
 from lxml import etree
+from .xml_utils import safe_xml_parser
 
 
 def svrl_to_findings(svrl_xml: bytes) -> List[Dict]:
@@ -8,7 +9,8 @@ def svrl_to_findings(svrl_xml: bytes) -> List[Dict]:
     layer is inferred if rule_id prefix contains 'BR-' (en16931) or 'XR-' (xrechnung), else 'en16931'.
     """
     ns = {"svrl": "http://purl.oclc.org/dsdl/svrl"}
-    root = etree.fromstring(svrl_xml)
+    # Parse SVRL with hardened XML parser (no DTD/entities/network)
+    root = etree.fromstring(svrl_xml, parser=safe_xml_parser())
     findings: List[Dict] = []
     for fa in root.xpath("//svrl:failed-assert|//svrl:successful-report", namespaces=ns):
         rid = fa.get("id") or fa.get("flag") or "RULE"
