@@ -28,4 +28,23 @@ def svrl_to_findings(svrl_xml: bytes) -> List[Dict]:
                 "hint_de": None,
             }
         )
+    # Also map successful-report as informational finding (severity=warn)
+    for sr in root.xpath("//svrl:successful-report", namespaces=ns):
+        rid = sr.get("id") or sr.get("flag") or "RULE"
+        location = sr.get("location") or ""
+        text_el = sr.find("svrl:text", namespaces=ns)
+        text = (text_el.text or "").strip() if text_el is not None else ""
+        layer = "xrechnung" if rid.startswith("XR-") else "en16931"
+        code = 3000 if layer == "xrechnung" else 2000
+        findings.append(
+            {
+                "code": code,
+                "rule_id": rid,
+                "layer": layer,
+                "severity": "warn",
+                "xpath": location,
+                "message_de": text,
+                "hint_de": None,
+            }
+        )
     return findings
